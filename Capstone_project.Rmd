@@ -335,23 +335,26 @@ library(ggplot2)
 library(gganimate)
 library(gapminder)
 library(ggrepel)
+library(devtools)
+devtools::install_github('thomasp85/gganimate')
 ```
-
+# GG-Animation
 ```{r, eval=FALSE,echo= FALSE, results='hide',warning=FALSE,message=FALSE}
 theme_set(theme_bw())
 p <- ggplot(fbi,
             aes(
-              x = year,
+              x = Total_num_of_incidents_reported,
               y = reports_per_100k,
-              size = pop,
-              color = continent
+              size = Population
               )
             ) +
   geom_point() +
+  geom_label(aes(label = round(year, 0)), nudge_x = 0.05, size = 6) +
   transition_time(year) +
+  labs(title = "Year: {frame_time}") + 
   scale_x_log10()
 
-gg_animate(p)
+animate(p)
 ```
 
 # Conclusion:
